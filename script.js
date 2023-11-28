@@ -42,7 +42,7 @@ const ticTac = (function () {
     const playerTurnSwitch = (function () {
       currentPlayer = currentPlayer === player[0] ? player[1] : player[0];
       alert(`${currentPlayer.name}'s turn!`);
-    })();
+    });
 
     const getCurrentPlayer = () => currentPlayer;
 
@@ -63,12 +63,21 @@ const ticTac = (function () {
       showBoard[row][column] = currentPlayerToken;
       return board;
     };
+    for(let i =8; i >=0; i-- ){
+      playerTurnSwitch();
 
-    // Prompt the user for the row and column temp
-    const row = prompt("Enter the row (0, 1, or 2): ");
-    const column = prompt("Enter the column (0, 1, or 2): ");
-    // Place the player's token in the selected cell
-    playerMove(currentPlayer, row, column);
+
+      // Prompt the user for the row and column temp
+      const row = prompt("Enter the row (0, 1, or 2): ");
+      const column = prompt("Enter the column (0, 1, or 2): ");
+      // Place the player's token in the selected cell
+      playerMove(currentPlayer, row, column);
+
+      console.table(board);
+      console.log(i, 'turns left')
+
+    }
+
 
     // return { playerTurnSwitch, getCurrentPlayer, currentPlayer, playerMove };
   };
