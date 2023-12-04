@@ -26,7 +26,7 @@ const ticTac = (function () {
         cell.push(cellNumber); // Assign cell number
         cellNumber++; // Increment cell number counter
 
-        board[i].push("-"); // Add the cell to the board array, put player input here later
+        board[i].push('-'); // Add the cell to the board array, put player input here later
         console.log(`this is cell no:${cell} on board ${board[i][j]}`);
         // board[i].push("-");
       }
@@ -37,24 +37,24 @@ const ticTac = (function () {
   const gameController = function () {
     const showBoard = getboard;
 
-    // switches current player turn, this immediately fires so fix this in a bit
-    let currentPlayer = player[0];
+
+    let currentPlayer = player[1];
     const playerTurnSwitch = (function () {
       currentPlayer = currentPlayer === player[0] ? player[1] : player[0];
       alert(`${currentPlayer.name}'s turn!`);
+      return currentPlayer;
     });
 
     const getCurrentPlayer = () => currentPlayer;
 
-    // next i need a way to basically loop through the board during each player's turn
-    //to see what row and column they choose
-
     const isEmpty = (row, column) => {
       if (showBoard[row][column] === "-") {
-        console.log("ye?");
-        return;
+        console.log(`${currentPlayer.name}' turn`);
+              // Place the player's token in the selected cell
+      playerMove(currentPlayer, row, column);
       } else {
-        playerMove();
+        alert(`already has something from other player`)
+
       }
     };
 
@@ -63,20 +63,42 @@ const ticTac = (function () {
       showBoard[row][column] = currentPlayerToken;
       return board;
     };
-    for(let i =8; i >=0; i-- ){
-      playerTurnSwitch();
+    // for(let i =8; i >=0; i-- ){
+    //   playerTurnSwitch();
+
+    //   // Prompt the user for the row and column temp
+    //   const row = prompt("Enter the row (0, 1, or 2): ");
+    //   const column = prompt("Enter the column (0, 1, or 2): ");
+    //   isEmpty(row, column);
+
+    //   console.table(board);
+    //   console.log(i, 'turns left')
+
+    // }
+
+    let isBoardFull = false;
+
+while (!isBoardFull) {
+  playerTurnSwitch();
+
+  // Prompt the user for the row and column
+  const row = prompt("Enter the row (0, 1, or 2): ");
+  const column = prompt("Enter the column (0, 1, or 2): ");
+
+  isEmpty(row, column);
 
 
-      // Prompt the user for the row and column temp
-      const row = prompt("Enter the row (0, 1, or 2): ");
-      const column = prompt("Enter the column (0, 1, or 2): ");
-      // Place the player's token in the selected cell
-      playerMove(currentPlayer, row, column);
+  // Check if all cells are filled with tokens
+  isBoardFull = showBoard.every(row => row.every(cell => cell !== "-"));
 
-      console.table(board);
-      console.log(i, 'turns left')
+  if (isBoardFull) {
+    console.log("The board is full! Game over!");
+    console.table(board);
 
-    }
+  } else {
+    console.table(board);
+  }
+}
 
 
     // return { playerTurnSwitch, getCurrentPlayer, currentPlayer, playerMove };
